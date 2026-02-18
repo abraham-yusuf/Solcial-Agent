@@ -21,4 +21,9 @@ pub mod social_network {
     pub fn create_post(ctx: Context<CreatePost>, content: String) -> Result<()> {
         instructions::create_post::handle_create_post(ctx, content)
     }
+
+    /// Likes an existing on-chain post (increments like counter).
+    pub fn like_post(ctx: Context<LikePost>) -> Result<()> {
+        instructions::like_post::handle_like_post(ctx)
+    }
 }
