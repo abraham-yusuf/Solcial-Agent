@@ -1,0 +1,388 @@
+{
+  "address": "BANU9njsMsKqgkHTQXKjnVJjJSp5cTRPUHbo56hNPd4V",
+  "metadata": {
+    "name": "social_network",
+    "version": "0.1.0",
+    "spec": "0.1.0",
+    "description": "OnchainSocial AI - Solana smart contract for onchain social network"
+  },
+  "instructions": [
+    {
+      "name": "create_post",
+      "docs": [
+        "Creates a new on-chain post (PDA) authored by the signer."
+      ],
+      "discriminator": [
+        123,
+        92,
+        184,
+        29,
+        231,
+        24,
+        15,
+        202
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  111,
+                  115,
+                  116
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              },
+              {
+                "kind": "account",
+                "path": "clock.unix_timestamp"
+              }
+            ]
+          }
+        },
+        {
+          "name": "profile",
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  102,
+                  105,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "clock",
+          "address": "SysvarC1ock11111111111111111111111111111111"
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "content",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "create_profile",
+      "docs": [
+        "Creates a new on-chain profile (PDA) for the connected wallet."
+      ],
+      "discriminator": [
+        225,
+        205,
+        234,
+        143,
+        17,
+        186,
+        50,
+        220
+      ],
+      "accounts": [
+        {
+          "name": "profile",
+          "writable": true,
+          "pda": {
+            "seeds": [
+              {
+                "kind": "const",
+                "value": [
+                  112,
+                  114,
+                  111,
+                  102,
+                  105,
+                  108,
+                  101
+                ]
+              },
+              {
+                "kind": "account",
+                "path": "authority"
+              }
+            ]
+          }
+        },
+        {
+          "name": "authority",
+          "writable": true,
+          "signer": true
+        },
+        {
+          "name": "system_program",
+          "address": "11111111111111111111111111111111"
+        }
+      ],
+      "args": [
+        {
+          "name": "username",
+          "type": "string"
+        },
+        {
+          "name": "bio",
+          "type": "string"
+        }
+      ]
+    },
+    {
+      "name": "like_post",
+      "docs": [
+        "Likes an existing on-chain post (increments like counter)."
+      ],
+      "discriminator": [
+        45,
+        242,
+        154,
+        71,
+        63,
+        133,
+        54,
+        186
+      ],
+      "accounts": [
+        {
+          "name": "post",
+          "writable": true
+        },
+        {
+          "name": "authority",
+          "signer": true
+        }
+      ],
+      "args": []
+    }
+  ],
+  "accounts": [
+    {
+      "name": "Post",
+      "discriminator": [
+        8,
+        147,
+        90,
+        186,
+        185,
+        56,
+        192,
+        150
+      ]
+    },
+    {
+      "name": "Profile",
+      "discriminator": [
+        184,
+        101,
+        165,
+        188,
+        95,
+        63,
+        127,
+        188
+      ]
+    }
+  ],
+  "events": [
+    {
+      "name": "LikeAdded",
+      "discriminator": [
+        5,
+        34,
+        221,
+        135,
+        206,
+        119,
+        92,
+        160
+      ]
+    },
+    {
+      "name": "PostCreated",
+      "discriminator": [
+        209,
+        178,
+        232,
+        24,
+        158,
+        92,
+        77,
+        227
+      ]
+    }
+  ],
+  "errors": [
+    {
+      "code": 6000,
+      "name": "InvalidUsername",
+      "msg": "Username must be between 1 and 32 characters."
+    },
+    {
+      "code": 6001,
+      "name": "BioTooLong",
+      "msg": "Bio must be at most 256 characters."
+    },
+    {
+      "code": 6002,
+      "name": "InvalidContent",
+      "msg": "Post content must be between 1 and 280 characters."
+    }
+  ],
+  "types": [
+    {
+      "name": "LikeAdded",
+      "docs": [
+        "Event emitted when a post is liked."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "liker",
+            "type": "pubkey"
+          },
+          {
+            "name": "post",
+            "type": "pubkey"
+          },
+          {
+            "name": "new_likes",
+            "type": "u64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Post",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "docs": [
+              "Author's wallet public key."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "content",
+            "docs": [
+              "Post content (max 280 chars)."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "likes",
+            "docs": [
+              "Number of likes."
+            ],
+            "type": "u64"
+          },
+          {
+            "name": "timestamp",
+            "docs": [
+              "Unix timestamp of creation."
+            ],
+            "type": "i64"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump seed."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    },
+    {
+      "name": "PostCreated",
+      "docs": [
+        "Event emitted when a new post is created."
+      ],
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "author",
+            "type": "pubkey"
+          },
+          {
+            "name": "post",
+            "type": "pubkey"
+          },
+          {
+            "name": "content",
+            "type": "string"
+          },
+          {
+            "name": "timestamp",
+            "type": "i64"
+          }
+        ]
+      }
+    },
+    {
+      "name": "Profile",
+      "type": {
+        "kind": "struct",
+        "fields": [
+          {
+            "name": "wallet",
+            "docs": [
+              "Wallet public key of the profile owner."
+            ],
+            "type": "pubkey"
+          },
+          {
+            "name": "username",
+            "docs": [
+              "Username (max 32 chars)."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "bio",
+            "docs": [
+              "Short bio (max 256 chars)."
+            ],
+            "type": "string"
+          },
+          {
+            "name": "bump",
+            "docs": [
+              "PDA bump seed."
+            ],
+            "type": "u8"
+          }
+        ]
+      }
+    }
+  ]
+}

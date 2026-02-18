@@ -1,11 +1,12 @@
 [toolchain]
+anchor_version = "0.32.1"
 
 [features]
-seeds = false
+resolution = true
 skip-lint = false
 
 [programs.devnet]
-social_network = "11111111111111111111111111111111"
+social_network = "BANU9njsMsKqgkHTQXKjnVJjJSp5cTRPUHbo56hNPd4V"
 
 [registry]
 url = "https://api.apr.dev"

@@ -6,7 +6,7 @@ pub mod state;
 
 use instructions::*;
 
-declare_id!("11111111111111111111111111111111");
+declare_id!("BANU9njsMsKqgkHTQXKjnVJjJSp5cTRPUHbo56hNPd4V");
 
 #[program]
 pub mod social_network {
