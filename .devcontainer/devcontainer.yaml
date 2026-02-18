@@ -1,0 +1,23 @@
+name: codespace-bun-pnpm-node24
+
+image: mcr.microsoft.com/devcontainers/javascript-node:0-24
+
+features:
+  ghcr.io/devcontainers/features/node:1:
+    version: "24"
+  ghcr.io/devcontainers/features/pnpm:1:
+    version: "latest"
+
+postCreateCommand: |
+  curl -fsSL https://bun.sh/install | bash
+  echo 'export BUN_INSTALL="$HOME/.bun"' >> ~/.bashrc
+  echo 'export PATH="$BUN_INSTALL/bin:$PATH"' >> ~/.bashrc
+  source ~/.bashrc
+
+customizations:
+  vscode:
+    extensions:
+      - esbenp.prettier-vscode
+      - dbaeumer.vscode-eslint
+      - bradlc.vscode-tailwindcss
+      
