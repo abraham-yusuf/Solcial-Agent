@@ -12,8 +12,8 @@ Use this format:
 Add daily notes below each section as needed.
 
 ## Phase 0: Basic Repo & Environment Setup (18 Feb – Target finish today)
-- [ ] Create new GitHub repo (if not already): onchain-social-ai  
-- [ ] Commit all existing docs (README, PRD, ARCHITECTURE, MVP, TECH_STACK, roadmap, copilot-instructions)  
+- [x] Create new GitHub repo (if not already): Solcial-Agent  
+- [x] Commit all existing docs (README, PRD, ARCHITECTURE, MVP, TECH_STACK, roadmap, copilot-instructions)  
 - [ ] Set up standard .gitignore (node_modules, .env, target/, etc.)  
 - [ ] Install pnpm globally if not already installed  
 - [ ] Initialize project: `pnpm init` → add core dependencies (next@15, typescript, tailwind, @solana/web3.js, etc.)  
