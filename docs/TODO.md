@@ -2,6 +2,7 @@
 **Project Progress Tracker**  
 **Hackathon Deadline:** February 27, 2026 (Submission due)  
 **Current Date:** February 18, 2026 (tracking start)  
+**Last Updated:** February 18, 2026  
 **Owner:** @bram0511  
 
 Use this format:  
@@ -11,33 +12,37 @@ Use this format:
 
 Add daily notes below each section as needed.
 
-## Phase 0: Basic Repo & Environment Setup (18 Feb – Target finish today)
+## Phase 0: Basic Repo & Environment Setup ✅ COMPLETED
 - [x] Create new GitHub repo (if not already): Solcial-Agent  
-- [x] Commit all existing docs (README, PRD, ARCHITECTURE, MVP, TECH_STACK, roadmap, copilot-instructions)  
-- [ ] Set up standard .gitignore (node_modules, .env, target/, etc.)  
-- [ ] Install pnpm globally if not already installed  
-- [ ] Initialize project: `pnpm init` → add core dependencies (next@15, typescript, tailwind, @solana/web3.js, etc.)  
-- [ ] Copy .env.example and fill basic values (SOLANA_RPC_URL, DATABASE_URL dev, etc.)  
-- [ ] Test run: `pnpm dev` (should show Next.js welcome page)  
+- [x] Commit all existing docs (README, PRD, ARCHITECTURE, MVP, TECH_STACK, ROADMAP, TODO, copilot-instructions)  
+- [x] Set up standard .gitignore (node_modules, .env, target/, .next/, etc.)  
+- [x] Install pnpm globally  
+- [x] Initialize project: `pnpm install` → core dependencies installed (next@15, typescript, tailwind, @solana/web3.js, @coral-xyz/anchor, wallet-adapter, etc.)  
+- [x] Copy .env.example with basic values (SOLANA_RPC_URL, DATABASE_URL, AGENT_WALLET_PRIVATE_KEY, OPENAI_API_KEY)  
+- [x] Test run: `pnpm build` succeeds (Next.js compiles, shows landing page with "Connect Wallet" placeholder)  
 
-**Today's notes (18 Feb):**  
+**Notes:** Phase 0 fully complete. All project scaffolding, docs, configs, and dependencies are in place. `pnpm build` and `pnpm dev` both work.
 
-## Phase 1: Anchor Smart Contract Basics (18–20 Feb)
-- [ ] Install Anchor CLI: `cargo install --git https://github.com/coral-xyz/anchor anchor-cli --locked`  
-- [ ] Init Anchor project in `anchor/` folder: `anchor init social_network`  
-- [ ] Define basic accounts & instructions in `programs/social_network/src/lib.rs`:  
-  - create_profile (PDA for username, bio)  
-  - create_post (content, author, timestamp, likes=0)  
-  - like_post (increment likes counter)  
-- [ ] Define events: PostCreated, LikeAdded  
-- [ ] Build & test locally: `anchor build && anchor test`  
+## Phase 1: Anchor Smart Contract Basics ✅ COMPLETED
+- [x] Anchor project initialized in `anchor/` folder with proper Cargo workspace  
+- [x] Define state accounts in `programs/social_network/src/state/`:  
+  - [x] `Profile` (wallet, username, bio, bump) with PDA seeds `[b"profile", authority]`  
+  - [x] `Post` (author, content, likes, timestamp, bump) with PDA seeds `[b"post", authority, timestamp]`  
+- [x] Define instructions in `programs/social_network/src/instructions/`:  
+  - [x] `create_profile` – creates on-chain profile PDA with username (max 32 chars) and bio (max 256 chars)  
+  - [x] `create_post` – creates on-chain post PDA with content (max 280 chars), emits `PostCreated` event  
+  - [x] `like_post` – increments likes counter on a post, emits `LikeAdded` event  
+- [x] Define error codes in `errors.rs`: InvalidUsername, BioTooLong, InvalidContent  
+- [x] Define events: `PostCreated` (author, post, content, timestamp), `LikeAdded` (liker, post, new_likes)  
+- [x] `cargo check` passes (program compiles successfully)  
+- [ ] Build with `anchor build` (requires Anchor CLI installation on deploy machine)  
 - [ ] Deploy to Devnet: `anchor deploy --provider.cluster devnet`  
-- [ ] Record program ID & update in config/env  
+- [ ] Record deployed program ID & update in Anchor.toml + .env  
 - [ ] Generate & commit IDL (anchor/target/idl/social_network.json)  
 
-**Target completion:** Feb 20 evening  
+**Notes:** Core smart contract logic is complete — all 3 instructions (create_profile, create_post, like_post) with proper PDAs, validation, and events. `cargo check` compiles cleanly. Remaining items are deployment tasks that require Anchor CLI on a machine with Solana tooling. Ready for Phase 2 parallel work.
 
-## Phase 2: Solder + Drizzle + PostgreSQL Indexing (19–21 Feb)
+## Phase 2: Solder + Drizzle + PostgreSQL Indexing (19–21 Feb) — 🔜 NEXT
 - [ ] Set up PostgreSQL (Neon or Supabase free tier) → get DATABASE_URL  
 - [ ] Initialize Solder: `npx solder init` in root or solder/ folder  
 - [ ] Define schema in `src/db/schema/` (profiles, posts, likes/notifications, agent_memory)  
@@ -79,17 +84,17 @@ Add daily notes below each section as needed.
 
 **Target completion:** Feb 27 morning  
 
-## Daily Check-in Template (Add below every day)
-**Date:** [YYYY-MM-DD]  
-- Today's progress:  
-- Blockers / issues:  
-- Tomorrow's plan:  
+## Daily Check-in Log
 
-Example:  
 **Date:** 2026-02-18  
-- Today's progress: Created repo, committed all docs, set up pnpm & env basics  
-- Blockers: -  
-- Tomorrow's plan: Install Anchor & initialize basic program  
+- Today's progress:  
+  - Phase 0 completed: All repo scaffolding, docs, configs, and dependencies verified  
+  - Phase 1 smart contract code completed: Added `like_post` instruction with `LikeAdded` event to Anchor program  
+  - All 3 core instructions now implemented: `create_profile`, `create_post`, `like_post`  
+  - `cargo check` and `pnpm build` both pass  
+  - Updated TODO.md with accurate progress tracking  
+- Blockers: Anchor CLI deployment requires Solana tooling (can be done in parallel)  
+- Tomorrow's plan: Start Phase 2 (Solder + Drizzle + PostgreSQL setup) and begin Phase 3 frontend work  
 
 Update this file after completing major tasks or at the end of each day.  
 Commit changes to track checklist progress in Git.  
