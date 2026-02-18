@@ -24,3 +24,13 @@ jobs:
           corepack prepare pnpm@latest --activate
 
       - name: Verify versions
+        run: |
+          node -v
+          pnpm -v
+
+      - name: Install dependencies
+        run: pnpm install
+
+      - name: Build project
+        run: pnpm build
+        
