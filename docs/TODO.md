@@ -35,10 +35,10 @@ Add daily notes below each section as needed.
 - [x] Define error codes in `errors.rs`: InvalidUsername, BioTooLong, InvalidContent  
 - [x] Define events: `PostCreated` (author, post, content, timestamp), `LikeAdded` (liker, post, new_likes)  
 - [x] `cargo check` passes (program compiles successfully)  
-- [ ] Build with `anchor build` (requires Anchor CLI installation on deploy machine)  
-- [ ] Deploy to Devnet: `anchor deploy --provider.cluster devnet`  
-- [ ] Record deployed program ID & update in Anchor.toml + .env  
-- [ ] Generate & commit IDL (anchor/target/idl/social_network.json)  
+- [x] Build with `anchor build` (requires Anchor CLI installation on deploy machine)  
+- [x] Deploy to Devnet: `anchor deploy --provider.cluster devnet`  
+- [x] Record deployed program ID & update in Anchor.toml + .env  
+- [x] Generate & commit IDL (anchor/idl/social_network.json)  
 
 **Notes:** Core smart contract logic is complete — all 3 instructions (create_profile, create_post, like_post) with proper PDAs, validation, and events. `cargo check` compiles cleanly. Remaining items are deployment tasks that require Anchor CLI on a machine with Solana tooling. Ready for Phase 2 parallel work.
 
