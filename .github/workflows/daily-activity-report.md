@@ -65,7 +65,7 @@ Generate a daily activity report summarizing the most important repository activ
 
 ## Report Format
 
-Create an issue with the title: "Daily Activity Report - [TODAY'S DATE]"
+Create an issue with the title: "Daily Activity Report - [YYYY-MM-DD]"
 
 Structure your report using the following markdown template:
 
@@ -128,7 +128,7 @@ Structure your report using the following markdown template:
 4. Create an issue using the `create-issue` safe output with:
    - Title: "Daily Activity Report - [TODAY'S DATE in YYYY-MM-DD format]"
    - Body: Your formatted report
-   - Labels: `["report", "automated"]` (if these labels exist, otherwise just use `["automated"]`)
+   - Labels will be automatically added: `["report", "automated"]`
 
 ## Important Notes
 
