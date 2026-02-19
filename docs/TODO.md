@@ -2,7 +2,7 @@
 **Project Progress Tracker**  
 **Hackathon Deadline:** February 27, 2026 (Submission due)  
 **Current Date:** February 18, 2026 (tracking start)  
-**Last Updated:** February 18, 2026  
+**Last Updated:** February 19, 2026  
 **Owner:** @bram0511  
 
 Use this format:  
@@ -42,16 +42,23 @@ Add daily notes below each section as needed.
 
 **Notes:** Core smart contract logic is complete — all 3 instructions (create_profile, create_post, like_post) with proper PDAs, validation, and events. `cargo check` compiles cleanly. Remaining items are deployment tasks that require Anchor CLI on a machine with Solana tooling. Ready for Phase 2 parallel work.
 
-## Phase 2: Solder + Drizzle + PostgreSQL Indexing (19–21 Feb) — 🔜 NEXT
-- [ ] Set up PostgreSQL (Neon or Supabase free tier) → get DATABASE_URL  
-- [ ] Initialize Solder: `npx solder init` in root or solder/ folder  
-- [ ] Define schema in `src/db/schema/` (profiles, posts, likes/notifications, agent_memory)  
-- [ ] Configure Solder: programs to watch, events (PostCreated, LikeAdded)  
-- [ ] Create custom indexer handlers (e.g., insert post on PostCreated event)  
-- [ ] Run `npx solder dev` → verify data lands in DB  
-- [ ] Create reusable queries in `src/db/queries/` (getRecentPosts, getProfileByWallet, etc.)  
+## Phase 2: Solder + Drizzle + PostgreSQL Indexing (19–21 Feb) — ✅ COMPLETED
+- [x] Set up PostgreSQL (Neon or Supabase free tier) → get DATABASE_URL  
+- [x] Define schema in `src/db/schema/` (profiles, posts, likes/notifications, agent_memory)  
+- [x] Create Drizzle client in `src/db/index.ts` (Neon serverless driver)  
+- [x] Create `drizzle.config.ts` for Drizzle Kit (generate, migrate, push, studio)  
+- [x] Configure Solder: `solder/config.ts` with programs to watch, events (PostCreated, LikeAdded)  
+- [x] Create Solder schema mirror in `solder/schema.ts` (re-exports src/db/schema)  
+- [x] Create custom indexer handlers in `solder/indexers/`:  
+  - [x] `post-created.ts` — inserts new post row on PostCreated event  
+  - [x] `like-added.ts` — updates likes count + creates notification on LikeAdded event  
+- [x] Create reusable queries in `src/db/queries/` (getRecentPosts, getProfileByWallet, getNotifications)  
+- [x] Add db scripts to package.json (db:generate, db:migrate, db:push, db:studio)  
+- [x] Verify `pnpm build` and `tsc --noEmit` both pass  
+- [ ] Run `npx drizzle-kit push` → verify tables created in DB (requires live DB connection)  
+- [ ] Run Solder dev → verify data lands in DB (requires deployed program + live events)  
 
-**Target completion:** Feb 21  
+**Notes:** All Phase 2 code is complete — Drizzle schema (4 tables: profiles, posts, notifications, agent_memory), Neon-backed DB client, 3 reusable queries, Solder config with event handlers for PostCreated and LikeAdded. TypeScript compiles cleanly. Remaining items require live Neon DB connection and deployed Anchor program for end-to-end testing.  
 
 ## Phase 3: Basic Frontend + Wallet Integration (20–22 Feb)
 - [ ] Set up Next.js App Router structure (app/dashboard/feed/page.tsx, etc.)  
@@ -85,6 +92,19 @@ Add daily notes below each section as needed.
 **Target completion:** Feb 27 morning  
 
 ## Daily Check-in Log
+
+**Date:** 2026-02-19  
+- Today's progress:  
+  - Phase 2 code completed: Drizzle ORM schema, queries, Solder indexer handlers  
+  - Created 4 Drizzle tables: `profiles`, `posts`, `notifications`, `agent_memory` in `src/db/schema/`  
+  - Created Drizzle client with Neon serverless driver in `src/db/index.ts`  
+  - Created 3 reusable queries: `getRecentPosts`, `getProfileByWallet`, `getNotifications`  
+  - Created Solder config (`solder/config.ts`) watching PostCreated & LikeAdded events  
+  - Created indexer handlers: `post-created.ts` (insert post) and `like-added.ts` (update likes + notification)  
+  - Added `drizzle.config.ts` and db scripts to package.json  
+  - `pnpm build` and `tsc --noEmit` both pass  
+- Blockers: Live DB push requires Neon connection; Solder dev requires deployed program with live events  
+- Tomorrow's plan: Start Phase 3 (Frontend + Wallet Integration)  
 
 **Date:** 2026-02-18  
 - Today's progress:  
