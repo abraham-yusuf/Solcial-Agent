@@ -67,7 +67,7 @@ Generate a daily activity report summarizing the most important repository activ
 
 Create an issue with the title: "Daily Activity Report - YYYY-MM-DD" (where YYYY-MM-DD is today's date)
 
-Structure your report using the following markdown template:
+Structure your report using the following markdown template (replace YYYY-MM-DD with today's actual date):
 
 ```markdown
 # Daily Activity Report - YYYY-MM-DD
@@ -126,7 +126,7 @@ Structure your report using the following markdown template:
 3. Format your findings according to the template above
 
 4. Create an issue using the `create-issue` safe output with:
-   - Title: "Daily Activity Report - [TODAY'S DATE in YYYY-MM-DD format]"
+   - Title: "Daily Activity Report - YYYY-MM-DD" (use today's actual date)
    - Body: Your formatted report
    - Labels will be automatically added: `["report", "automated"]`
 
