@@ -39,6 +39,8 @@ export function FeedList({ initialPosts }: FeedListProps) {
 
       const program = getProgram(wallet);
 
+      const timestamp = Math.floor(Date.now() / 1000);
+
       const tx = await (program.methods as any)
         .createPost(content)
         .accounts({
@@ -48,14 +50,22 @@ export function FeedList({ initialPosts }: FeedListProps) {
         })
         .rpc();
 
+      // Derive the post PDA used by the program: seeds = ["post", authority, timestamp]
+      const timestampBuf = Buffer.alloc(8);
+      timestampBuf.writeBigInt64LE(BigInt(timestamp));
+      const [postPda] = PublicKey.findProgramAddressSync(
+        [Buffer.from("post"), publicKey.toBuffer(), timestampBuf],
+        programId
+      );
+
       // Optimistically add the post to the local feed
       const newPost: PostData = {
         id: Date.now(),
-        pdaAddress: tx,
+        pdaAddress: postPda.toBase58(),
         authorWallet: publicKey.toBase58(),
         content,
         likes: 0,
-        onchainTimestamp: Math.floor(Date.now() / 1000),
+        onchainTimestamp: timestamp,
       };
       setPosts((prev) => [newPost, ...prev]);
     },
