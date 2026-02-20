@@ -2,7 +2,7 @@
 **Project Progress Tracker**  
 **Hackathon Deadline:** February 27, 2026 (Submission due)  
 **Current Date:** February 18, 2026 (tracking start)  
-**Last Updated:** February 19, 2026  
+**Last Updated:** February 20, 2026  
 **Owner:** @bram0511  
 
 Use this format:  
@@ -60,15 +60,20 @@ Add daily notes below each section as needed.
 
 **Notes:** All Phase 2 code is complete — Drizzle schema (4 tables: profiles, posts, notifications, agent_memory), Neon-backed DB client, 3 reusable queries, Solder config with event handlers for PostCreated and LikeAdded. TypeScript compiles cleanly. Remaining items require live Neon DB connection and deployed Anchor program for end-to-end testing.  
 
-## Phase 3: Basic Frontend + Wallet Integration (20–22 Feb)
-- [ ] Set up Next.js App Router structure (app/dashboard/feed/page.tsx, etc.)  
-- [ ] Install & configure @solana/wallet-adapter-react  
-- [ ] Create WalletProvider & connect button  
-- [ ] Build feed page: display list of latest posts (query via Drizzle)  
-- [ ] Create post form → server action → call Anchor create_post  
-- [ ] Like button → server action → call like_post  
+## Phase 3: Basic Frontend + Wallet Integration (20–22 Feb) — ✅ COMPLETED
+- [x] Set up Next.js App Router structure (app/dashboard/feed/page.tsx, app/dashboard/layout.tsx)  
+- [x] Install & configure @solana/wallet-adapter-react (already in deps, configured in WalletProvider)  
+- [x] Create WalletProvider & connect button (src/components/templates/WalletProvider.tsx, src/components/atoms/WalletConnectButton.tsx)  
+- [x] Build feed page: display list of latest posts (query via Drizzle server action)  
+- [x] Create post form → client-side Anchor create_post tx (src/components/molecules/CreatePostForm.tsx)  
+- [x] Like button → client-side Anchor like_post tx (src/components/molecules/PostCard.tsx)  
+- [x] Solana connection & Anchor program helpers (src/lib/solana/, src/lib/anchor/)  
+- [x] Utility helpers: shortenAddress, timeAgo (src/lib/utils/)  
+- [x] Updated root layout with WalletProvider  
+- [x] Updated landing page with real wallet connect button & link to feed  
+- [x] `pnpm build` passes cleanly  
 
-**Target completion:** Feb 22  
+**Target completion:** Feb 22 — ✅ Completed Feb 20  
 
 ## Phase 4: AI Agents Integration (22–25 Feb)
 - [ ] Set up ElizaOS: install package, configure memory backed by Drizzle (src/agents/eliza/)  
@@ -92,6 +97,25 @@ Add daily notes below each section as needed.
 **Target completion:** Feb 27 morning  
 
 ## Daily Check-in Log
+
+**Date:** 2026-02-20  
+- Today's progress:  
+  - Phase 3 completed: Basic Frontend + Wallet Integration  
+  - Created WalletProvider with Phantom support (`src/components/templates/WalletProvider.tsx`)  
+  - Created WalletConnectButton with dynamic import for SSR safety (`src/components/atoms/WalletConnectButton.tsx`)  
+  - Created PostCard molecule with like button (`src/components/molecules/PostCard.tsx`)  
+  - Created CreatePostForm molecule with character counter (`src/components/molecules/CreatePostForm.tsx`)  
+  - Created FeedList organism with Anchor create_post and like_post integration (`src/components/organisms/FeedList.tsx`)  
+  - Created dashboard layout with sticky header + wallet button (`app/dashboard/layout.tsx`)  
+  - Created feed page with server-side Drizzle query (`app/dashboard/feed/page.tsx`)  
+  - Created Solana connection helper (`src/lib/solana/connection.ts`) and Anchor program client (`src/lib/anchor/program.ts`)  
+  - Created utility helpers: shortenAddress, timeAgo (`src/lib/utils/format.ts`)  
+  - Updated root layout with WalletProvider wrapper  
+  - Updated landing page with real "Select Wallet" button and feed link  
+  - Copied .env.example to .env  
+  - `pnpm build` passes cleanly  
+- Blockers: Anchor tx signing requires live Devnet + wallet with SOL; DB queries require Neon connection  
+- Tomorrow's plan: Start Phase 4 (AI Agents Integration — ElizaOS + OpenClaw)
 
 **Date:** 2026-02-19  
 - Today's progress:  
